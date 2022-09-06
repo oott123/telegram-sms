@@ -1,7 +1,7 @@
 # Telegram SMS
 
 <p align="center">
-<img src="https://vip1.loli.net/2020/09/28/PzWnqVZgcbE7wCv.png" alt="Telegram SMS">
+<img src="https://vip1.static.reallct.com/2020/09/28/PzWnqVZgcbE7wCv.png" alt="Telegram SMS">
 </p>
 
 ![Min Android Version](https://img.shields.io/badge/Min%20Android%20Version-5.1-orange.svg?style=flat-square)
@@ -15,13 +15,9 @@
 
 ## News, Questions and Contributions
 
-**Because the XDA updates itself to XDA2021, XDA Labs has been closed. I am sorry for this and I can no longer provide the XDA Lab version of Telegram SMS. You can still use the GitHub version to update your Telegram SMS. If you request a refund, please contact me via qwe7002.dev@gmail.com**
-
 You can follow the Telegram channel Telegram SMS Change Log for the latest news. [English](https://t.me/tg_sms_changelog_eng), [简体中文](https://t.me/tg_sms_changelog)
 
 **Please visit [https://reall.uk](https://reall.uk) to submit and discuss issues regarding this project.**
-
-**请访问 [https://reall.uk](https://reall.uk) 提交并讨论有关此项目的问题。**
 
 The primary language used for commit messages is Simplified Chinese. However, you're welcome to use English in commit messages when making contributions.
 
@@ -103,6 +99,7 @@ This APP uses the following open source libraries:
 - [CodeauxLib](https://github.com/telegram-sms/CodeauxLibPortable)
 - [Paper](https://github.com/pilgr/Paper)
 - [AwesomeQRCode](https://github.com/SumiMakito/AwesomeQRCode)
+- [code-scanner](https://github.com/yuriy-budiyev/code-scanner)
 
 The creation of this APP would not be possible without the help from the following people:
 
@@ -124,6 +121,8 @@ I would also like to thank the following people for their hard work to localise 
 - Chinese(Traditional)
   - [@lm902](https://github.com/lm902)
   - [@孟武尼德霍格龍](https://github.com/tony8077616)
+- Cantonese (Simp./Trad.) (Remember: these translations are only available when the locale is set/fallbacked to 粵語（香港）or 粤语（中华人民共和国） )
+  - [@ous50](https://github.com/ous50)
 
 This APP uses the following public DNS service:
 

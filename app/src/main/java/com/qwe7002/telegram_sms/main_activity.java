@@ -26,11 +26,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -176,8 +176,9 @@ public class main_activity extends AppCompatActivity {
         battery_monitoring_switch.setOnClickListener(v -> {
             if (battery_monitoring_switch.isChecked()) {
                 charger_status_switch.setVisibility(View.VISIBLE);
+                charger_status_switch.setEnabled(true);
             } else {
-                charger_status_switch.setVisibility(View.GONE);
+                charger_status_switch.setEnabled(false);
                 charger_status_switch.setChecked(false);
             }
         });
@@ -202,8 +203,10 @@ public class main_activity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (trusted_phone_number_editview.length() != 0) {
                     fallback_sms_switch.setVisibility(View.VISIBLE);
+                    fallback_sms_switch.setEnabled(true);
                 } else {
-                    fallback_sms_switch.setVisibility(View.GONE);
+                    //fallback_sms_switch.setVisibility(View.GONE);
+                    fallback_sms_switch.setEnabled(false);
                     fallback_sms_switch.setChecked(false);
                 }
             }
@@ -289,7 +292,7 @@ public class main_activity extends AppCompatActivity {
                 }
                 return false;
             });
-            final String error_head = "Get chat ID failed:";
+            final String error_head = "Get chat ID failed: ";
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -362,7 +365,7 @@ public class main_activity extends AppCompatActivity {
                             }
                         }
                     }
-                    main_activity.this.runOnUiThread(() -> new AlertDialog.Builder(v.getContext()).setTitle(R.string.select_chat).setItems(chat_name_list.toArray(new String[0]), (dialogInterface, i) -> chat_id_editview.setText(chat_id_list.get(i))).setPositiveButton("Cancel", null).show());
+                    main_activity.this.runOnUiThread(() -> new AlertDialog.Builder(v.getContext()).setTitle(R.string.select_chat).setItems(chat_name_list.toArray(new String[0]), (dialogInterface, i) -> chat_id_editview.setText(chat_id_list.get(i))).setPositiveButton(context.getString(R.string.cancel_button), null).show());
                 }
             });
         });
@@ -412,7 +415,7 @@ public class main_activity extends AppCompatActivity {
             OkHttpClient okhttp_client = network_func.get_okhttp_obj(doh_switch.isChecked(), Paper.book("system_config").read("proxy_config", new proxy()));
             Request request = new Request.Builder().url(request_uri).method("POST", body).build();
             Call call = okhttp_client.newCall(request);
-            final String error_head = "Send message failed:";
+            final String error_head = "Send message failed: ";
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -533,6 +536,7 @@ public class main_activity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 0:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -541,6 +545,7 @@ public class main_activity extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(context, scanner_activity.class);
+                //noinspection deprecation
                 startActivityForResult(intent, 1);
                 break;
             case 1:
@@ -579,7 +584,7 @@ public class main_activity extends AppCompatActivity {
             case R.id.about_menu_item:
                 PackageManager packageManager = context.getPackageManager();
                 PackageInfo packageInfo;
-                String versionName = "";
+                String versionName= "unknown";
                 try {
                     packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
                     versionName = packageInfo.versionName;
@@ -638,7 +643,7 @@ public class main_activity extends AppCompatActivity {
                 proxy_password.setText(proxy_item.password);
                 new AlertDialog.Builder(this).setTitle(R.string.proxy_dialog_title)
                         .setView(proxy_dialog_view)
-                        .setPositiveButton("OK", (dialog, which) -> {
+                        .setPositiveButton(R.string.ok_button, (dialog, which) -> {
                             if (!doh_switch.isChecked()) {
                                 doh_switch.setChecked(true);
                             }
@@ -675,8 +680,8 @@ public class main_activity extends AppCompatActivity {
         assert file_name != null;
         Uri uri = Uri.parse("https://get.telegram-sms.com" + file_name);
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        //noinspection deprecation
-        builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        CustomTabColorSchemeParams params = new CustomTabColorSchemeParams.Builder().setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary)).build();
+        builder.setDefaultColorSchemeParams(params);
         CustomTabsIntent customTabsIntent = builder.build();
         try {
             customTabsIntent.launchUrl(this, uri);

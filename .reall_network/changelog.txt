@@ -1,3 +1,7 @@
-- Repair SMS command function
+- Support Android 13
 
-- Add support for sending SMS commands with dual cards
+- Fix the bug that the background process is suddenly killed
+
+- Update dependency version
+
+- Add Cantonese translation
